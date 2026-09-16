@@ -48,7 +48,7 @@ No. Icons resolve in four tiers, and the first three need no configuration at al
 |---|---|---|
 | Any GUI app (Zen, Chrome, Steam…) | its `.desktop` entry + your icon theme | nothing |
 | TUI apps with a system icon — `btop`, `nvim`, `vim`, `htop`, `docker` | your icon theme | nothing |
-| Apps in the bundled pack — `claude`, `opencode`, `helix`/`hx`, `k9s`, `yazi`, `obsidian` | `icons/` in this repo | nothing |
+| Apps in the bundled pack — `claude`, `opencode`, `helix`/`hx`, `k9s`, `yazi`, `obsidian`, `spotify_player` | `icons/` in this repo | nothing |
 | Anything else | a file you drop in | one command |
 
 For that last row, the filename *is* the configuration — `icons/<process>.png` is matched
