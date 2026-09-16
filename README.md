@@ -22,6 +22,24 @@ omarchy plugin add https://github.com/skylightlim/omarchy-workspace-peek.git --e
 Then `omarchy restart shell`. Settings live in the bar's widget settings UI — no JSON
 editing required.
 
+### Update
+
+```bash
+omarchy plugin update skylightlim.workspaces
+```
+
+### Remove
+
+```bash
+omarchy plugin remove skylightlim.workspaces
+omarchy restart shell
+```
+
+Removal takes the widget out of your bar and deletes its plugin directory. It writes
+nothing outside that directory, so nothing else needs undoing — unless you added
+`iconOverrides` entries by hand, which stay in `~/.config/omarchy/shell.json` until you
+remove them yourself.
+
 ## Do I have to add an icon for every app?
 
 No. Icons resolve in four tiers, and the first three need no configuration at all:
