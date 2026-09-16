@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "skylightlim.workspaces",
-  "name": "Workspaces (end-4 style)",
+  "name": "Workspace Peek",
   "version": "2.0.0",
   "author": "skylightlim",
   "license": "MIT",
-  "description": "Per-workspace app icons with a Super-hold number reveal, in the style of end-4/dots-hyprland. Detects TUI and CLI apps running inside terminals, so yazi, btop and Claude Code show their own icon instead of the terminal's.",
+  "description": "Workspace slots that show the app actually running — including yazi, btop and Claude Code inside terminals, which normally all report as the terminal's icon. Hold Super to peek at workspace numbers. Behaviour inspired by end-4/dots-hyprland.",
   "kinds": [
     "bar-widget"
   ],
@@ -13,13 +13,13 @@
     "barWidget": "Workspaces.qml"
   },
   "barWidget": {
-    "displayName": "Workspaces (end-4 style)",
-    "description": "Workspace slots showing the active app's icon, with a Super-hold number reveal.",
+    "displayName": "Workspace Peek",
+    "description": "Workspace slots showing the running app's icon, terminal apps included. Hold Super to peek at the numbers.",
     "category": "Compositor",
     "aliases": [
       "workspaces",
-      "end4",
-      "illogical-impulse"
+      "peek",
+      "workspace-icons"
     ],
     "allowMultiple": false,
     "defaultSection": "left",

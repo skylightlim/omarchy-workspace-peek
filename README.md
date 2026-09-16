@@ -1,17 +1,22 @@
-# Workspaces (end-4 style) for Omarchy
+# Workspace Peek
 
-A Quickshell bar widget that shows one slot per Hyprland workspace. Occupied slots show
-the app's icon; holding **Super** swaps every slot to its workspace number with an animated
-indicator — the behaviour of [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland).
+An Omarchy (Quickshell) bar widget that shows one slot per Hyprland workspace. Occupied
+slots show the app's icon; hold **Super** to peek at the workspace numbers, with an
+animated indicator tracking the active one.
 
 The part other workspace widgets get wrong: **a terminal's window class is `kitty`, never
-what is running inside it.** This widget probes each window's process tree, so yazi, btop,
-lazygit and Claude Code show their own icon instead of a wall of identical terminal icons.
+what is running inside it.** Workspace Peek probes each window's process tree, so yazi,
+btop, lazygit and Claude Code show their own icon instead of a wall of identical terminal
+icons.
+
+The look and the Super-hold reveal are inspired by
+[end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) — all credit to
+[@end-4](https://github.com/end-4) for the original illogical-impulse design.
 
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/skylightlim/omarchy-workspaces-end4.git --enable
+omarchy plugin add https://github.com/skylightlim/omarchy-workspace-peek.git --enable
 ```
 
 Then `omarchy restart shell`. Settings live in the bar's widget settings UI — no JSON
@@ -94,6 +99,10 @@ additionally needs `rsvg-convert` (`librsvg`) and `magick` (`imagemagick`).
 
 ## Credits
 
-Behaviour modelled on [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland).
-Derived from Omarchy's built-in workspaces widget. Bundled marks from
+The behaviour and look are modelled on
+[end-4/dots-hyprland](https://github.com/end-4/dots-hyprland)'s illogical-impulse
+workspaces — thanks to [@end-4](https://github.com/end-4), who designed the interaction
+this widget reimplements for Omarchy.
+
+Built on Omarchy's own `omarchy.workspaces` bar widget (MIT). Bundled marks from
 [simple-icons](https://simpleicons.org) (CC0). MIT licensed — see `LICENSE`.
