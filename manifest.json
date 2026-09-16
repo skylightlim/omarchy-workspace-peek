@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "skylightlim.workspaces",
+  "name": "Workspaces (end-4 style)",
+  "version": "2.0.0",
+  "author": "skylightlim",
+  "license": "MIT",
+  "description": "Per-workspace app icons with a Super-hold number reveal, in the style of end-4/dots-hyprland. Detects TUI and CLI apps running inside terminals, so yazi, btop and Claude Code show their own icon instead of the terminal's.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Workspaces.qml"
+  },
+  "barWidget": {
+    "displayName": "Workspaces (end-4 style)",
+    "description": "Workspace slots showing the active app's icon, with a Super-hold number reveal.",
+    "category": "Compositor",
+    "aliases": [
+      "workspaces",
+      "end4",
+      "illogical-impulse"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "left",
+    "defaults": {
+      "showAppIcons": true,
+      "monochromeIcons": true,
+      "iconScale": "1.0",
+      "revealDelay": 100
+    },
+    "schema": [
+      {
+        "key": "showAppIcons",
+        "type": "boolean",
+        "label": "Show app icons",
+        "defaultValue": true,
+        "description": "Occupied workspaces show their biggest window's icon. Turn off for plain numbers."
+      },
+      {
+        "key": "monochromeIcons",
+        "type": "boolean",
+        "label": "Tint icons to the bar colour",
+        "defaultValue": true,
+        "description": "Renders icons in the bar's foreground colour instead of their own. Ignored on light themes and transparent bars."
+      },
+      {
+        "key": "iconScale",
+        "type": "string",
+        "label": "Icon size multiplier",
+        "defaultValue": "1.0",
+        "description": "Relative to the bar's default icon size. Try 1.25 for a taller bar."
+      },
+      {
+        "key": "revealDelay",
+        "type": "integer",
+        "label": "Super-hold before numbers appear",
+        "min": 0,
+        "max": 2000,
+        "step": 50,
+        "defaultValue": 100,
+        "description": "Milliseconds. Hold Super to swap every slot to its workspace number; 0 reveals instantly."
+      }
+    ]
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.workspaces"
+  }
+}
