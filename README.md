@@ -62,6 +62,12 @@ against the process name found running inside the terminal:
 It is picked up within 30 seconds, no restart needed. Any transparent 128×128 PNG you
 drop in yourself works the same way.
 
+Everything in `icons/` is treated as a **monochrome mask**: only its alpha is used, and it
+is always tinted to the bar's foreground colour so it stays legible on light and dark
+themes alike. (System icons for GUI apps are real pictures and keep their own colours.)
+If you want a colourful custom icon left untinted, point an `iconOverride` at an absolute
+path instead — those are read as pictures rather than masks.
+
 ### When the process name isn't the icon name
 
 Only if a name can't line up (the process is `nvim` but you want `neovim.png`) do you need
