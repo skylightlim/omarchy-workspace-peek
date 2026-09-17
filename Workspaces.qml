@@ -60,23 +60,12 @@ BarWidget {
     var col = Qt.color(c)
     return (col.r * 0.299 + col.g * 0.587 + col.b * 0.114) > 0.5
   }
+  // Deliberately false on light themes: icons then render in their own colours.
+  // That puts a hard requirement on every icon this plugin ships — it must BE a
+  // colour that reads on a light bar. add-icon.sh renders each mark in its
+  // simple-icons brand colour for exactly this reason; an earlier version used
+  // white, which was invisible on any light theme the moment tinting stopped.
   readonly property bool tintIcons: root.monochromeIcons && !(root.bar ? root.bar.transparent : false) && !root.isLightTheme
-
-  // System icons are real pictures, so they keep the light-theme exemption
-  // above and render in their own colours. The icons this plugin ships are
-  // not pictures: add-icon.sh renders every mark as a white alpha mask, which
-  // is invisible on a light theme the moment tinting is skipped. Masks are
-  // therefore always colorized to the bar foreground — there is no colour to
-  // preserve, so tinting them loses nothing on any theme.
-  //
-  // A plugin-relative path is the marker, which is exactly what tiers 1 and 2
-  // of resolveProcessIcon return; tier 3 hands back an absolute file:// URL
-  // from the icon theme. Point an override at an absolute path to opt out.
-  function isMaskIcon(src) {
-    var s = String(src || "")
-    if (!s) return false
-    return s.indexOf("file://") !== 0 && s.indexOf("image://") !== 0 && s.charAt(0) !== "/"
-  }
 
   // Quickshell.Hyprland exposes the workspace/toplevel collections as CONSTANT
   // object models, so QML bindings cannot see them mutate. The slot delegates
@@ -648,11 +637,6 @@ BarWidget {
           id: iconHost
           width: root.iconSize
           height: root.iconSize
-          readonly property bool maskIcon: root.isMaskIcon(parent.overrideIcon)
-          // Masks route through the effect even when monochromeIcons is off,
-          // because "show the real icon" has no meaning for a colourless mark.
-          readonly property bool effected: root.monochromeIcons || maskIcon
-          readonly property bool tinted: root.tintIcons || maskIcon
           scale: root.superPressAndHeld ? 0.75 : 1.0
           opacity: parent.occupied && root.showAppIcons ? 1 : 0
           x: root.superPressAndHeld
@@ -678,22 +662,22 @@ BarWidget {
           Image {
             id: wsIcon
             anchors.fill: parent
-            visible: !iconHost.effected
+            visible: !root.monochromeIcons
             source: parent.parent.overrideIcon !== ""
               ? Qt.resolvedUrl(parent.parent.overrideIcon)
               : root.iconSourceForClass(root.windowClass(parent.parent.biggestWindow))
             fillMode: Image.PreserveAspectFit
             sourceSize.width: Math.round(root.iconSize * Screen.devicePixelRatio)
             sourceSize.height: Math.round(root.iconSize * Screen.devicePixelRatio)
-            layer.enabled: iconHost.effected
+            layer.enabled: root.monochromeIcons
             layer.smooth: true
           }
 
           MultiEffect {
             anchors.fill: parent
             source: wsIcon
-            visible: iconHost.effected
-            colorization: iconHost.tinted ? 1.0 : 0.0
+            visible: root.monochromeIcons
+            colorization: root.tintIcons ? 1.0 : 0.0
             colorizationColor: root.iconForeground
           }
         }

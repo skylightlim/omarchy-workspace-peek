@@ -62,11 +62,18 @@ against the process name found running inside the terminal:
 It is picked up within 30 seconds, no restart needed. Any transparent 128×128 PNG you
 drop in yourself works the same way.
 
-Everything in `icons/` is treated as a **monochrome mask**: only its alpha is used, and it
-is always tinted to the bar's foreground colour so it stays legible on light and dark
-themes alike. (System icons for GUI apps are real pictures and keep their own colours.)
-If you want a colourful custom icon left untinted, point an `iconOverride` at an absolute
-path instead — those are read as pictures rather than masks.
+`add-icon.sh` renders each mark in its **brand colour** (Claude terracotta, Spotify green,
+Kubernetes blue), taken from simple-icons' own metadata. That matters because of how the
+widget tints:
+
+| Theme | `monochromeIcons` | What you see |
+|---|---|---|
+| Dark | on (default) | tinted to the bar's foreground — the icon's own colour is unused |
+| **Light** | on or off | **no tint: the icon's own colour, as-is** |
+| Dark | off | the icon's own colour |
+
+So on a light theme an icon is shown exactly as authored — which is why marks must not be
+white. Any transparent 128×128 PNG works if its colour reads on your bar.
 
 ### When the process name isn't the icon name
 
