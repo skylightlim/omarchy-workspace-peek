@@ -125,7 +125,7 @@ within ~3 s while the terminal stays open.
 
 ## Requirements
 
-Omarchy 4.x (Quickshell shell), `pstree` (`pacman -S psmisc`), `jq`. `scripts/add-icon.sh`
+Omarchy 4.x (Quickshell shell), `pstree` (`psmisc`), `jq`. `scripts/add-icon.sh`
 additionally needs `rsvg-convert` (`librsvg`) and `magick` (`imagemagick`).
 
 ## Credits
