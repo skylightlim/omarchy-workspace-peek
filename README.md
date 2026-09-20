@@ -123,6 +123,39 @@ blanking the cache first makes icons flicker terminal↔app once per cycle.
 Icons follow app start and stop: quitting btop reverts the slot to the terminal's icon
 within ~3 s while the terminal stays open.
 
+## Troubleshooting
+
+### One app's slot is blank while terminal apps still work
+
+Almost always your **icon theme is set to a theme that isn't installed** — not a bug in the
+widget. A GUI app's icon comes from the `Icon=` name in its `.desktop` entry, and that name
+only resolves through a theme, so when the theme is missing Qt finds nothing and the slot
+paints empty.
+
+Terminal slots keep working and disguise the problem. `kitty` and `nvim` ship icons in
+`/usr/share/pixmaps`, which Qt still searches when it has no usable theme, and the bundled
+pack in `icons/` is loaded straight from disk. So `kitty` renders normally while `zen`,
+`btop`, `foot` and `chromium` all go blank together.
+
+Check whether the configured theme actually exists:
+
+```bash
+gsettings get org.gnome.desktop.interface icon-theme    # e.g. 'Yaru-gray'
+ls -d /usr/share/icons/*/ ~/.local/share/icons/*/       # is that name in the list?
+```
+
+If it isn't, point it at one that is:
+
+```bash
+gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
+omarchy restart shell
+```
+
+Under `QT_QPA_PLATFORMTHEME=gtk3` (the Omarchy default) Qt reads its icon theme from that
+GTK setting, and it does not fall back to `hicolor` when the name is wrong. A stale value
+left behind by a theme switch therefore breaks themed icons for every Qt app, not just this
+widget.
+
 ## Requirements
 
 Omarchy 4.x (Quickshell shell), `pstree` (`psmisc`), `jq`. `scripts/add-icon.sh`
