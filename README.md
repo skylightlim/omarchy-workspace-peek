@@ -48,7 +48,7 @@ No. Icons resolve in four tiers, and the first three need no configuration at al
 |---|---|---|
 | Any GUI app (Zen, Chrome, Steam…) | its `.desktop` entry + your icon theme | nothing |
 | TUI apps with a system icon — `btop`, `nvim`, `vim`, `htop`, `docker` | your icon theme | nothing |
-| Apps in the bundled pack — `claude`, `opencode`, `helix`/`hx`, `k9s`, `yazi`, `obsidian`, `spotify_player` | `icons/` in this repo | nothing |
+| Apps in the bundled pack — `claude`, `opencode`, `helix`/`hx`, `herdr`, `k9s`, `yazi`, `obsidian`, `spotify_player` | `icons/` in this repo | nothing |
 | Anything else | a file you drop in | one command |
 
 For that last row, the filename *is* the configuration — `icons/<process>.png` is matched
@@ -68,12 +68,25 @@ widget tints:
 
 | Theme | `monochromeIcons` | What you see |
 |---|---|---|
-| Dark | on (default) | tinted to the bar's foreground — the icon's own colour is unused |
+| Dark | on (default) | hue shifted to the bar's foreground — but the mark's **luminance is kept**, so a dark mark stays dark |
 | **Light** | on or off | **no tint: the icon's own colour, as-is** |
 | Dark | off | the icon's own colour |
 
-So on a light theme an icon is shown exactly as authored — which is why marks must not be
-white. Any transparent 128×128 PNG works if its colour reads on your bar.
+So a mark has to clear both ends. On a light theme it is painted exactly as authored, so it
+must not be white. On a dark theme the tint is `MultiEffect.colorization`, which recolours
+the mark but **preserves its luminance** — so it must not be near-black either. Tinting
+cannot rescue a dark mark; it only renders that same dark mark in a different hue.
+
+A mid-to-bright brand colour clears both, which is what `add-icon.sh` produces. Any
+transparent 128×128 PNG works if its colour reads on your bar.
+
+One bundled mark is a deliberate exception: `herdr`'s own brand colour really is near-white
+(`#eae8ee`), so it is shipped that way and is ideal on a dark bar but will vanish on a light
+one. On a light theme, recolour it:
+
+```bash
+magick icons/herdr.png -fill '#8B8B8B' -colorize 100 icons/herdr.png
+```
 
 ### When the process name isn't the icon name
 
