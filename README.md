@@ -17,10 +17,19 @@ The look and the Super-hold reveal are inspired by
 
 ```bash
 omarchy plugin add https://github.com/skylightlim/omarchy-workspace-peek.git --enable
+~/.config/omarchy/plugins/skylightlim.workspaces/scripts/setup-keybind.sh
+omarchy restart shell
 ```
 
-Then `omarchy restart shell`. Settings live in the bar's widget settings UI — no JSON
-editing required.
+The second line binds the Super key to the widget. Without it the icons never move
+when you hold Super: the widget listens on a Hyprland global shortcut
+(`quickshell:workspaceNumber`), Hyprland only fires one when a keybinding points at it,
+and `omarchy plugin add` has no install hook that could add the binding for you. The
+script appends a marked block to `~/.config/hypr/bindings.lua` (or `bindings.conf` on
+older installs), backs the file up first, and is safe to re-run. The binding is
+transparent, so `SUPER + <key>` shortcuts keep working.
+
+Settings live in the bar's widget settings UI — no JSON editing required.
 
 ### Update
 
@@ -31,14 +40,15 @@ omarchy plugin update skylightlim.workspaces
 ### Remove
 
 ```bash
+~/.config/omarchy/plugins/skylightlim.workspaces/scripts/setup-keybind.sh --remove
 omarchy plugin remove skylightlim.workspaces
 omarchy restart shell
 ```
 
-Removal takes the widget out of your bar and deletes its plugin directory. It writes
-nothing outside that directory, so nothing else needs undoing — unless you added
-`iconOverrides` entries by hand, which stay in `~/.config/omarchy/shell.json` until you
-remove them yourself.
+Run the first line before removing the plugin: it takes the Super binding back out of
+your Hyprland config. Removal then takes the widget out of your bar and deletes its
+plugin directory. Nothing else needs undoing — unless you added `iconOverrides` entries
+by hand, which stay in `~/.config/omarchy/shell.json` until you remove them yourself.
 
 ## Do I have to add an icon for every app?
 

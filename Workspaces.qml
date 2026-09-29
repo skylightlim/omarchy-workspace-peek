@@ -329,7 +329,7 @@ BarWidget {
   }
 
   // Super-key reveal state. Hyprland routes SUPER press/release to the
-  // "workspaceNumber" global shortcut (see ~/.config/hypr/bindings.lua).
+  // "workspaceNumber" global shortcut; scripts/setup-keybind.sh adds that bind.
   property bool superDown: false
   property bool superPressAndHeld: false
 
